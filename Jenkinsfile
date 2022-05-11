@@ -5,6 +5,13 @@ pipeline{
        }     
     }
     stages {
+        stage('Checkout') { 
+         agent any 
+          steps { 
+               deleteDir() 
+               checkout scm 
+          } 
+       } 
         stage('Install Node Module'){
            steps { 
                sh 'npm install'  
