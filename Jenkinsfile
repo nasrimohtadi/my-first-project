@@ -24,6 +24,7 @@ pipeline{
         }
         stage('Build'){
             steps { 
+               sh 'ls' 
                sh 'tar -cvzf ng_project.tar.gz --strip-components=1 dist' 
                archive 'ng_project.tar.gz'
             } 
