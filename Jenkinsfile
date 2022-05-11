@@ -17,7 +17,8 @@ pipeline{
         }
         stage('Build'){
             steps { 
-               echo "Build..." 
+               sh 'tar -cvzf ng_project.tar.gz --strip-components=1 dist' 
+               archive 'ng_project.tar.gz'
             } 
         }
         stage('Nexus') {
