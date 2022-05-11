@@ -26,10 +26,17 @@ pipeline{
             steps { 
                sh 'ng build' 
                sh 'ls' 
-               sh 'tar -cvzf ng_project.tar.gz --strip-components=1 dist' 
-               archive 'ng_project.tar.gz'
+               
             } 
         }
+         stage('Archive'){
+            steps { 
+               sh 'tar -cvzf ng_project.tar.gz --strip-components=1 dist' 
+               archive 'ng_project.tar.gz'
+               
+            } 
+        }
+        
         stage('Nexus') {
             agent none 
             steps { 
