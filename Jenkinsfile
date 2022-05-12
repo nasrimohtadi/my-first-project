@@ -34,8 +34,8 @@ pipeline{
         }
          stage('Archive'){
             steps { 
-               sh 'tar -cvzf ng_project.tar.gz --strip-components=1 dist' 
-               archive 'ng_project.tar.gz'
+               sh 'tar -cvzf ng_project$BUILD_ID.tar.gz --strip-components=1 dist' 
+               archive 'ng_project$BUILD_ID.tar.gz'
                
             } 
         }
@@ -45,7 +45,7 @@ pipeline{
             steps { 
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexus_manven_user',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                      echo "Nexus Connected..."
-                    sh 'curl -v -u ${USERNAME}:${PASSWORD} --upload-file ng_project.tar.gz http://artefact.focus.com.tn:8081/repository/webbuild/com/ng_project/release-$BUILDVERSION/ng_project.tar.gz' 
+                    sh 'curl -v -u ${USERNAME}:${PASSWORD} --upload-file ng_project.tar.gz http://artefact.focus.com.tn:8081/repository/webbuild/com/ng_project/release-$BUILDVERSION/ng_project$BUILD_ID.tar.gz' 
                 } 
             } 
         } 
