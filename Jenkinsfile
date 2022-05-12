@@ -44,6 +44,8 @@ pipeline{
             agent none 
             steps { 
                 script {
+                    echo '${currentBuild.result} + hello'
+                     echo 'currentBuild.result + hello'
                     if( currentBuild.result == 'SUCCESS' ){
                         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexus_manven_user',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                             echo "Nexus Connected..."
