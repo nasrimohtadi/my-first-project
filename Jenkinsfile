@@ -42,20 +42,19 @@ pipeline{
         
         stage('Nexus') {
             agent none 
-            steps { 
-                script {
-                    sh '${currentBuild.result} + hello'
-                     sh 'currentBuild.result + hello'
-                    if( currentBuild.result == 'SUCCESS' ){
-                        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexus_manven_user',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                            echo "Nexus Connected..."
+             if( currentBuild.result == 'SUCCESS' ){
+                steps { 
+                    
                         
-                                sh 'curl -v -u ${USERNAME}:${PASSWORD} --upload-file ng_project.tar.gz http://artefact.focus.com.tn:8081/repository/webbuild/com/ng_project/$BUILDVERSION.$BUILD_ID-Latest-RELEASE/ng_project.tar.gz' 
-                            
-                        } 
-                    }
-                }
-            } 
+                            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexus_manven_user',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                                echo "Nexus Connected..."
+                                    sh 'curl -v -u ${USERNAME}:${PASSWORD} --upload-file ng_project.tar.gz http://artefact.focus.com.tn:8081/repository/webbuild/com/ng_project/$BUILDVERSION.$BUILD_ID-Latest-RELEASE/ng_project.tar.gz' 
+                                
+                            } 
+                        
+                    
+                } 
+             }
         } 
     }
 }
