@@ -4,6 +4,9 @@ pipeline{
            image 'trion/ng-cli' 
        }     
     }
+    environment {
+         def BUILDVERSION = sh(script: "echo `date +%F-%T`", returnStdout: true).trim()
+    }
     stages {
         stage('Checkout') { 
          agent any 
